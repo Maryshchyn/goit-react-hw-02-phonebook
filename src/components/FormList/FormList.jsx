@@ -1,9 +1,8 @@
+import {FormListUl, FormListLi, FormListButton} from './FormList.styled'
 
-
-const FormList = ({ contacts, delitForm }) => <ul>{contacts.map(({id, name, number}) =>
-    <li key={id}>{name}{number}<button onClick={()=> delitForm(id)}>Видалити</button></li>
-)}</ul>
+export const FormList = ({ contacts, delitForm }) => <FormListUl>{contacts.map(({id, name, number}) =>
+    <FormListLi key={id}>{name}{number}<FormListButton onClick={()=> delitForm(id)}>Видалити</FormListButton></FormListLi>
+)}</FormListUl>
     
 
 
-export default FormList;

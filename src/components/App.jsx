@@ -1,8 +1,10 @@
 import { Component } from 'react';
 import Form from './Form/Form'
-import FormList from './FormList/FormList'
+import {FormList} from './FormList/FormList'
 import { nanoid } from 'nanoid';
-// import shortid from 'shortid';
+import { Title } from './Title/Title';
+import { Contacts } from './Contacts/Contacts';
+import {Filter} from './Filter/Filter'
 
 
 
@@ -33,23 +35,27 @@ export class App extends Component {
       contacts: [contact, ...prevState.contacts],
     }))
   }
+  changeFilter = e => {
+    this.setState({ filter: e.currentTarget.value });
+  };
+  
 
 
   render() {
-    const { contacts } = this.state;
+    const {contacts, filter } = this.state;
+    const normalizeFilter = filter.toLowerCase();
+
+    const vaisibleContacts = contacts.filter(contact =>
+      contact.name.toLowerCase().includes(normalizeFilter))
+    
     return (
       <div>
-        <h1>Phonebook</h1>
+        <Title title="Phonebook"/>
         <Form onSubmit={this.addForm} />
-        
-        <FormList contacts={contacts} delitForm={this.deleteForm} />
-
-      
-        
-        </div>
+        <Contacts text='Contacts' />
+        <Filter filter={filter}  onChange={this.changeFilter} />
+        <FormList contacts={vaisibleContacts} delitForm={this.deleteForm} />
+      </div>
    )
  }
-
- 
-   
 }

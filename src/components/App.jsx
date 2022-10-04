@@ -19,13 +19,22 @@ export class App extends Component {
      filter: '',
     };
 
+  findContactByName = name => {
+    const { contacts } = this.state;
+    return contacts.find(item => item.name.toLowerCase() === name);
+  };
+
+  formSubmitHandler = data => {
+    const { name, number } = data;
+    const normalizedName = name.toLowerCase();
+    if (this.findContactByName(normalizedName)) {
+      alert (`${name} is already in contacts`);
+      return;
+    }
+    this.addForm(name, number);
+  };
  
-  deleteForm = (constactId) =>{
-    this.setState(prefState => ({
-      contacts: prefState.contacts.filter(contact => contact.id !== constactId)
-    }))
-  }
-  addForm = (name, number) => {
+ addForm = (name, number) => {
     const contact = {
       id: nanoid(),
       name,
@@ -35,6 +44,14 @@ export class App extends Component {
       contacts: [contact, ...prevState.contacts],
     }))
   }
+
+
+  deleteForm = (constactId) =>{
+    this.setState(prefState => ({
+      contacts: prefState.contacts.filter(contact => contact.id !== constactId)
+    }))
+  }
+ 
   changeFilter = e => {
     this.setState({ filter: e.currentTarget.value });
   };
@@ -51,7 +68,7 @@ export class App extends Component {
     return (
       <div>
         <Title title="Phonebook"/>
-        <Form onSubmit={this.addForm} />
+        <Form onSubmit={this.formSubmitHandler} />
         <Contacts text='Contacts' />
         <Filter filter={filter}  onChange={this.changeFilter} />
         <FormList contacts={vaisibleContacts} delitForm={this.deleteForm} />

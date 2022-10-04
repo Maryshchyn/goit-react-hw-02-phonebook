@@ -19,8 +19,7 @@ class Form extends Component {
     hendlerOnSubmit = e => {
     e.preventDefault();
       console.log(this.state)
-      this.props.onSubmit(this.state.name, this.state.number)
-     
+      this.props.onSubmit(this.state.name, this.state.number)         
 
       this.setState({ name: '',
         number: ''})
